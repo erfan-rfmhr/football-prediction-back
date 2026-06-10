@@ -5,6 +5,7 @@ description = "football prediction backend system"
 requires-python = ">=3.12"
 dependencies = [
     "django==5.2",
+    "django-filter>=25.2",
     "djangorestframework>=3.17.1",
     "djangorestframework-simplejwt>=5.5.1",
     "djoser>=2.3.3",
