@@ -28,8 +28,10 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'base',
     'accounts',
     'tournaments',
+    'predictions'
 ]
 
 INSTALLED_APPS = [
