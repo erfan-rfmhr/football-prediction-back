@@ -1,0 +1,6 @@
+[project]
+name = "football-prediction-back"
+version = "0.1.0"
+description = "football prediction backend system"
+requires-python = ">=3.12"
+dependencies = []
