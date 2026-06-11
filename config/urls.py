@@ -8,6 +8,7 @@ urlpatterns = [
     re_path(r'^api/', include('djoser.urls.jwt')),
     re_path(r'^api/', include('djoser.urls')),
     path('api/', include('tournaments.urls')),
+    path('api/', include('predictions.urls')),
 ]
 
 if settings.DEBUG:
