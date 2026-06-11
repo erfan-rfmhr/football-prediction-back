@@ -1,7 +1,7 @@
 [project]
-name = "football-prediction-back"
+name = "sooteakhar"
 version = "0.1.0"
-description = "football prediction backend system"
+description = "sooteakhar backend"
 requires-python = ">=3.12"
 dependencies = [
     "django==5.2",

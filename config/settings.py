@@ -134,8 +134,8 @@ SIMPLE_JWT = {
 
 # drf-spectacular Configuration
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Football Prediction API',
-    'DESCRIPTION': 'API for football match predictions',
+    'TITLE': 'Soote Akhar API',
+    'DESCRIPTION': '',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
