@@ -1,6 +1,6 @@
 import django_filters.rest_framework as filters
 from django.db.models import Q
-from apps.competitions.models import Tournament, Team
+from apps.competitions.models import Tournament, Team, StageChoices, Match
 
 class TournamentFilter(filters.FilterSet):
     name = filters.CharFilter(lookup_expr='icontains')
@@ -18,3 +18,11 @@ class TournamentFilter(filters.FilterSet):
         model = Tournament
         fields = ['name', 'teams']
 
+class MatchFilter(filters.FilterSet):
+    tournament = filters.ModelChoiceFilter(queryset=Tournament.objects.all())
+    stage = filters.ChoiceFilter(choices=StageChoices.choices)
+    start_at = filters.DateRangeFilter()
+
+    class Meta:
+        model = Match
+        fields = ['tournament', 'stage', 'start_at']
