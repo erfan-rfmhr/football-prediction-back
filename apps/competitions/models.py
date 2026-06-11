@@ -14,12 +14,12 @@ class Team(models.Model):
         return self.name
 
 class StageChoices(models.TextChoices):
-    GROUP = 'Group Stage'
-    ROUND_32 = 'Round of 32'
-    ROUND_16 = 'Round of 16'
-    QUARTER_FINAL = 'Quarter Final'
-    SEMI_FINAL = 'Semi-Final'
-    FINAL = 'Final'
+    GROUP = 'مرحله گروهی'
+    ROUND_32 = 'دور 32ام'
+    ROUND_16 = 'دور 16ام'
+    QUARTER_FINAL = 'یک چهارم نهایی'
+    SEMI_FINAL = 'نیمه نهایی'
+    FINAL = 'فینال'
 
 class Match(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.SET_NULL, null=True)
