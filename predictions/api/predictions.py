@@ -4,11 +4,35 @@ from predictions.api.serializers import PredictionSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
-class PredictionViewSet(viewsets.ModelViewSet):
+
+class PredictionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Prediction.objects.all()
     serializer_class = PredictionSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = ['points']
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+    @action(detail=False, methods=['post'])
+    def make(self, request, format=None):
+        # Get the user's existing prediction for the current match (adjust filter as needed)
+        match_id = request.data.get('match')
+        existing_prediction = Prediction.objects.filter(user=request.user, match_id=match_id).first()
+        
+        if existing_prediction:
+            # Update existing prediction
+            serializer = self.get_serializer(instance=existing_prediction, data=request.data, partial=True)
+        else:
+            # Create new prediction
+            serializer = self.get_serializer(data=request.data)
+        
+        serializer.is_valid(raise_exception=True)
+        # Associate current user with the prediction
+        serializer.save(user=request.user)
+        return Response(serializer.data)
