@@ -9,7 +9,6 @@ class Tournament(models.Model):
 
 class Team(models.Model):
     name = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
