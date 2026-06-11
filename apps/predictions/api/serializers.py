@@ -1,6 +1,6 @@
-from tournaments.api.serializers import MatchSerializer
+from apps.competitions.api.serializers import MatchSerializer
 from rest_framework import serializers
-from predictions.models import Prediction
+from apps.predictions.models import Prediction
 
 class PredictionSerializer(serializers.ModelSerializer):
     class Meta:

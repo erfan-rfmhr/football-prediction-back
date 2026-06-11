@@ -5,10 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^api/', include('djoser.urls.jwt')),
-    re_path(r'^api/', include('djoser.urls')),
-    path('api/', include('tournaments.urls')),
-    path('api/', include('predictions.urls')),
+    path('api/', include('config.api_urls')),
 ]
 
 if settings.DEBUG:

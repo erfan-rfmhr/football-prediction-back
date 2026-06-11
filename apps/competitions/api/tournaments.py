@@ -2,11 +2,9 @@ from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django_filters.rest_framework import FilterSet, filters
-from rest_framework import serializers
-from tournaments.models import Tournament, Match, Team
-from tournaments.api.serializers import MatchSerializer, TournamentSerializer
-from tournaments.api.filters import TournamentFilter
+from apps.competitions.models import Tournament, Match
+from apps.competitions.api.serializers import MatchSerializer, TournamentSerializer
+from apps.competitions.api.filters import TournamentFilter
 
 
 class TournamentViewSet(viewsets.ReadOnlyModelViewSet):

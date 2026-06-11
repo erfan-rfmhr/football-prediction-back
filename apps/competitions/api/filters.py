@@ -1,6 +1,6 @@
 import django_filters.rest_framework as filters
 from django.db.models import Q
-from tournaments.models import Tournament, Team
+from apps.competitions.models import Tournament, Team
 
 class TournamentFilter(filters.FilterSet):
     name = filters.CharFilter(lookup_expr='icontains')

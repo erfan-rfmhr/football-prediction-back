@@ -1,6 +1,6 @@
-from tournaments.models import Match
+from apps.competitions.models import Match
 from rest_framework import viewsets
-from tournaments.api.serializers import MatchSerializer
+from apps.competitions.api.serializers import MatchSerializer
 
 
 class MatchViewSet(viewsets.ReadOnlyModelViewSet):

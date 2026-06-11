@@ -1,4 +1,4 @@
-from predictions.api import PredictionViewSet
+from apps.predictions.api import PredictionViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()

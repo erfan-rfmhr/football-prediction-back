@@ -1,4 +1,4 @@
-from tournaments.models import Tournament, Team, Match
+from apps.competitions.models import Tournament, Team, Match
 from rest_framework import serializers
 
 
