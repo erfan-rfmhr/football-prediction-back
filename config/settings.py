@@ -25,6 +25,7 @@ THIRD_PARTY_APPS = [
     'drf_spectacular',
     'djoser',
     'django_filters',
+    'corsheaders',
 ]
 
 LOCAL_APPS = [
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -139,3 +141,8 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+
+# Cors
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Next.js
+]
