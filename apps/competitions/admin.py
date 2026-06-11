@@ -11,6 +11,6 @@ class TournamentAdmin(admin.ModelAdmin):
 admin.site.register(Team)
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ('home_team', 'away_team', 'home_score', 'away_score', 'date')
+    list_display = ('home_team', 'away_team', 'home_score', 'away_score', 'start_at')
     search_fields = ('home_team__name', 'away_team__name')
     raw_id_fields = ('home_team', 'away_team', 'tournament')
