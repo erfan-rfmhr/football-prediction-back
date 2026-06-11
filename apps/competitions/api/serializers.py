@@ -14,6 +14,7 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class MatchSerializer(serializers.ModelSerializer):
+    tournament = TournamentSerializer(read_only=True)
     home_team = TeamSerializer(read_only=True)
     away_team = TeamSerializer(read_only=True)
 
