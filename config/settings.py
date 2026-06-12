@@ -125,6 +125,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_SCHEMA_CLASS': 'config.schema.AppLabelTaggedSchema',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    "ORDERING_PARAM": "o",
 }
 
 # JWT Configuration
