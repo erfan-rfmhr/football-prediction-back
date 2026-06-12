@@ -1,3 +1,5 @@
+from django.db.models import Subquery
+from apps.predictions.models import Prediction
 from django.db import models
 
 class Tournament(models.Model):
@@ -21,7 +23,16 @@ class StageChoices(models.TextChoices):
     SEMI_FINAL = 'نیمه نهایی'
     FINAL = 'فینال'
 
+
+class MatchQuerySet(models.QuerySet):
+    def with_user_prediction(self, user):
+        qs = self.annotate(
+            user_prediction=Subquery(Prediction.objects.filter(user=user, match=models.OuterRef('id')).values("id")[:1])
+        )
+        return qs
+
 class Match(models.Model):
+    objects = MatchQuerySet.as_manager()
     tournament = models.ForeignKey(Tournament, on_delete=models.SET_NULL, null=True)
     stage = models.CharField(max_length=255, choices=StageChoices.choices)
     home_team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="home_matches")
