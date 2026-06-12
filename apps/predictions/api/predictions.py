@@ -8,7 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 class PredictionViewSet(viewsets.ModelViewSet):
-    queryset = Prediction.objects.all()
+    queryset = Prediction.objects.all().select_related('match', 'match__home_team', 'match__away_team')
     serializer_class = PredictionSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
