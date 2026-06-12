@@ -3,6 +3,8 @@ from rest_framework import serializers
 from apps.predictions.models import Prediction
 
 class PredictionSerializer(serializers.ModelSerializer):
+    match = MatchSerializer()
+    
     class Meta:
         model = Prediction
         fields = '__all__'
