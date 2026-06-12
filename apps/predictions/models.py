@@ -12,7 +12,7 @@ class Prediction(BaseModel):
     match = models.ForeignKey('competitions.Match', on_delete=models.CASCADE)
     home_score = models.IntegerField()
     away_score = models.IntegerField()
-    points = models.IntegerField(default=PointsChoices.WRONG, choices=PointsChoices.choices)
+    points = models.IntegerField(default=None, choices=PointsChoices.choices, null=True, blank=True)
 
     class Meta:
         constraints  = [
