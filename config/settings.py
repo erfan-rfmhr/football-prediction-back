@@ -36,7 +36,6 @@ LOCAL_APPS = [
     'apps.core',
     'apps.accounts',
     'apps.competitions',
-    'apps.predictions',
 ]
 
 INSTALLED_APPS = [

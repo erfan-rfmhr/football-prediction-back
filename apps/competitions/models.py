@@ -1,6 +1,7 @@
 from django.db.models import Subquery
-from apps.predictions.models import Prediction
 from django.db import models
+from apps.core.models import BaseModel
+
 
 class Tournament(models.Model):
     name = models.CharField(max_length=255)
@@ -43,3 +44,21 @@ class Match(models.Model):
 
     def __str__(self):
         return f"{self.home_team.name} vs {self.away_team.name}"
+
+class PointsChoices(models.IntegerChoices):
+    EXACT = 10
+    DIFF = 7
+    WINNER = 5
+    WRONG = 2
+
+class Prediction(BaseModel):
+    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    match = models.ForeignKey('Match', on_delete=models.CASCADE)
+    home_score = models.IntegerField()
+    away_score = models.IntegerField()
+    points = models.IntegerField(default=None, choices=PointsChoices.choices, null=True, blank=True)
+
+    class Meta:
+        constraints  = [
+            models.UniqueConstraint(fields=['user', 'match'], name='unique_prediction_per_match'),
+        ]
