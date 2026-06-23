@@ -1,4 +1,6 @@
-from django.db.models import Subquery
+from django.db.models.functions import Round, Cast, RowNumber
+from django.db.models.aggregates import Sum, Count
+from django.db.models import Subquery, Window, FloatField
 from django.db import models
 from apps.core.models import BaseModel
 
@@ -51,7 +53,28 @@ class PointsChoices(models.IntegerChoices):
     WINNER = 5
     WRONG = 2
 
+
+class PredictionQuerySet(models.QuerySet):
+    def statistics(self):
+        """Annotates queryset with dashboard statistics"""
+        qs = self.filter(points__isnull=False).values('user').annotate(
+            total_points=Sum('points'),
+            rank=Window(
+                expression=RowNumber(),
+                order_by=['-total_points']
+            ),
+            total_predictions=Count('id'),
+            correct_predictions=Count('id', filter=models.Q(points=PointsChoices.EXACT)),
+            accuracy_percentage=Round(
+                (Cast(models.F('correct_predictions'), FloatField()) / Cast(models.F('total_predictions'), FloatField())) * 100,
+                2
+            ),
+        )
+        return qs
+
 class Prediction(BaseModel):
+    objects = PredictionQuerySet.as_manager()
+
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
     match = models.ForeignKey('Match', on_delete=models.CASCADE)
     home_score = models.PositiveIntegerField()
