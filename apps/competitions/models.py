@@ -38,8 +38,8 @@ class Match(models.Model):
     stage = models.CharField(max_length=255, choices=StageChoices.choices)
     home_team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="home_matches")
     away_team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="away_matches")
-    home_score = models.IntegerField(null=True, blank=True)
-    away_score = models.IntegerField(null=True, blank=True)
+    home_score = models.PositiveIntegerField(null=True, blank=True)
+    away_score = models.PositiveIntegerField(null=True, blank=True)
     start_at = models.DateTimeField()
 
     def __str__(self):
@@ -54,9 +54,9 @@ class PointsChoices(models.IntegerChoices):
 class Prediction(BaseModel):
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
     match = models.ForeignKey('Match', on_delete=models.CASCADE)
-    home_score = models.IntegerField()
-    away_score = models.IntegerField()
-    points = models.IntegerField(default=None, choices=PointsChoices.choices, null=True, blank=True)
+    home_score = models.PositiveIntegerField()
+    away_score = models.PositiveIntegerField()
+    points = models.PositiveIntegerField(default=None, choices=PointsChoices.choices, null=True, blank=True)
 
     class Meta:
         constraints  = [
