@@ -12,7 +12,7 @@ class PredictionViewSet(viewsets.ModelViewSet):
     serializer_class = PredictionSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    ordering_fields = ['points']
+    ordering_fields = ['created_at']
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
