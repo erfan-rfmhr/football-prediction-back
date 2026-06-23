@@ -219,3 +219,6 @@ __marimo__/
 
 # IDE
 .trae/*
+
+# Static files
+staticfiles/
