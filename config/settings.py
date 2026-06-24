@@ -88,7 +88,14 @@ AUTH_USER_MODEL = 'accounts.User'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}')
+    "default": {
+        "ENGINE": env.str("DB_ENGINE", default="django.db.backends.mysql"),
+        "NAME": env.str("DB_DATABASE"),
+        "USER": env.str("DB_USERNAME"),
+        "PASSWORD": env.str("DB_PASSWORD"),
+        "HOST": env.str("DB_HOST"),
+        "PORT": env.str("DB_PORT"),
+    }
 }
 
 
