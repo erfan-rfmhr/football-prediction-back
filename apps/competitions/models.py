@@ -36,10 +36,10 @@ class MatchQuerySet(models.QuerySet):
 
 class Match(models.Model):
     objects = MatchQuerySet.as_manager()
-    tournament = models.ForeignKey(Tournament, on_delete=models.SET_NULL, null=True)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, null=True)
     stage = models.CharField(max_length=255, choices=StageChoices.choices)
-    home_team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="home_matches")
-    away_team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, related_name="away_matches")
+    home_team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name="home_matches")
+    away_team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name="away_matches")
     home_score = models.PositiveIntegerField(null=True, blank=True)
     away_score = models.PositiveIntegerField(null=True, blank=True)
     start_at = models.DateTimeField()
