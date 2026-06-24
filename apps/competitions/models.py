@@ -57,7 +57,7 @@ class PointsChoices(models.IntegerChoices):
 class PredictionQuerySet(models.QuerySet):
     def statistics(self):
         """Annotates queryset with dashboard statistics"""
-        qs = self.filter(points__isnull=False).values('user').annotate(
+        qs = self.filter(points__isnull=False).values('user', "user__username").annotate(
             total_points=Sum('points'),
             rank=Window(
                 expression=RowNumber(),

@@ -63,3 +63,10 @@ class MatchWithPredictionSerializer(MatchSerializer):
         if user.is_authenticated and obj.user_prediction:
             return UserPredictionSerializer(instance=Prediction.objects.get(id=obj.user_prediction)).data
         return data
+
+class LeaderboardSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    points = serializers.IntegerField()
+    rank = serializers.IntegerField()
+    correct_predictions = serializers.IntegerField()
+    total_predictions = serializers.IntegerField()

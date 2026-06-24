@@ -128,6 +128,12 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'config.schema.AppLabelTaggedSchema',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     "ORDERING_PARAM": "o",
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "1000/min",
+    },
 }
 
 # JWT Configuration
@@ -146,4 +152,4 @@ SPECTACULAR_SETTINGS = {
 }
 
 # Cors
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=["http://localhost:3000"])
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=["http://localhost:3000", "http://localhost:8000"])
