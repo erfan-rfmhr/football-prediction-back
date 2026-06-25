@@ -22,7 +22,13 @@ class MatchFilter(filters.FilterSet):
     tournament = filters.ModelChoiceFilter(queryset=Tournament.objects.all())
     stage = filters.ChoiceFilter(choices=StageChoices.choices)
     start_at = filters.DateRangeFilter()
+    team_name = filters.CharFilter(lookup_expr='icontains', method='filter_team_name')
 
     class Meta:
         model = Match
-        fields = ['tournament', 'stage', 'start_at']
+        fields = ['tournament', 'stage', 'start_at', 'team_name']
+    
+    def filter_team_name(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(Q(home_team__name__icontains=value) | Q(away_team__name__icontains=value))
