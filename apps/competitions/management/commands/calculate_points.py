@@ -26,11 +26,16 @@ class Command(BaseCommand):
             match_home = match.home_score
             match_away = match.away_score
 
+            diff_comparison = (pred_home - pred_away) == (match_home - match_away)
+            match_winner = "home" if match_home > match_away else "away"
+            pred_winner = "home" if pred_home > pred_away else "away"
+            winner_comparison = pred_winner == match_winner
+
             if pred_home == match_home and pred_away == match_away:
                 points = PointsChoices.EXACT
-            elif (pred_home - pred_away) == (match_home - match_away):
+            elif diff_comparison and winner_comparison:
                 points = PointsChoices.DIFF
-            elif self._same_outcome(pred_home, pred_away, match_home, match_away):
+            elif winner_comparison:
                 points = PointsChoices.WINNER
             else:
                 points = PointsChoices.WRONG
@@ -44,9 +49,3 @@ class Command(BaseCommand):
                 f"Calculated points for {calculated} predictions. Skipped {skipped}."
             )
         )
-
-    @staticmethod
-    def _same_outcome(pred_home, pred_away, match_home, match_away):
-        pred_sign = (pred_home > pred_away) - (pred_home < pred_away)
-        match_sign = (match_home > match_away) - (match_home < match_away)
-        return pred_sign == match_sign
