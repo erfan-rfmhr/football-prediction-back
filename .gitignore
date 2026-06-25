@@ -222,3 +222,7 @@ __marimo__/
 
 # Static files
 staticfiles/
+static/
+
+# Media
+media/
