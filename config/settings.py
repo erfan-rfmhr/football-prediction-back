@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middleware.ErrorResponseLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -169,3 +170,8 @@ CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["http://localho
 # Media
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# Telegram
+TELEGRAM_BOT_API_KEY = env('TELEGRAM_BOT_API_KEY', default='')
+TELEGRAM_BASE_URL = env('TELEGRAM_BASE_URL', default='')
+ADMIN_CHAT_ID = env('ADMIN_CHAT_ID', default='')
