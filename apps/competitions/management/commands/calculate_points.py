@@ -27,19 +27,25 @@ class Command(BaseCommand):
             match_away = match.away_score
 
             diff_comparison = (pred_home - pred_away) == (match_home - match_away)
-            match_winner = "home" if match_home > match_away else "away"
-            pred_winner = "home" if pred_home > pred_away else "away"
+            match_winner = "draw"
+            if match_home > match_away:
+                match_winner = "home"
+            elif match_home < match_away:
+                match_winner = "away"
+            pred_winner = "draw"
+            if pred_home > pred_away:
+                pred_winner = "home"
+            elif pred_home < pred_away:
+                pred_winner = "away"
             winner_comparison = pred_winner == match_winner
-
             if pred_home == match_home and pred_away == match_away:
                 points = PointsChoices.EXACT
             elif diff_comparison and winner_comparison:
                 points = PointsChoices.DIFF
-            elif winner_comparison and not (match_home == match_away and pred_home == pred_away):
+            elif winner_comparison:
                 points = PointsChoices.WINNER
             else:
                 points = PointsChoices.WRONG
-
             prediction.points = points
             prediction.save(update_fields=["points"])
             calculated += 1
