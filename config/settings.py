@@ -143,7 +143,6 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "anon": "1000/min",
     },
-    "DEFAULT_PAGINATION_CLASS": "apps.core.api.pagination.CustomPagination",
     'PAGE_SIZE': 25,
 }
 

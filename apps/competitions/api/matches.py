@@ -1,3 +1,4 @@
+from apps.core.api.pagination import CustomPagination
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from apps.competitions.api.filters import MatchFilter
 from apps.competitions.models import Match
@@ -14,6 +15,7 @@ class MatchViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_class = MatchFilter
     ordering_fields = ['start_at']
     ordering = ['-start_at']
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
