@@ -35,7 +35,7 @@ class Command(BaseCommand):
                 points = PointsChoices.EXACT
             elif diff_comparison and winner_comparison:
                 points = PointsChoices.DIFF
-            elif winner_comparison:
+            elif winner_comparison and not (match_home == match_away and pred_home == pred_away):
                 points = PointsChoices.WINNER
             else:
                 points = PointsChoices.WRONG
