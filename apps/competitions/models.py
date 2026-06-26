@@ -55,14 +55,10 @@ class PointsChoices(models.IntegerChoices):
 
 
 class PredictionQuerySet(models.QuerySet):
-    def statistics(self):
+    def statistics(self, with_ranks=True):
         """Annotates queryset with dashboard statistics"""
         qs = self.filter(points__isnull=False).values('user', "user__username").annotate(
             total_points=Sum('points'),
-            rank=Window(
-                expression=RowNumber(),
-                order_by=['-total_points']
-            ),
             total_predictions=Count('id'),
             correct_predictions=Count('id', filter=models.Q(points=PointsChoices.EXACT)),
             accuracy_percentage=Round(
@@ -70,6 +66,13 @@ class PredictionQuerySet(models.QuerySet):
                 2
             ),
         )
+        if with_ranks:
+            qs = qs.annotate(
+                rank=Window(
+                    expression=RowNumber(),
+                    order_by=['-total_points']
+                ),
+            )
         return qs
 
 class Prediction(BaseModel):

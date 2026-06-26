@@ -12,26 +12,31 @@ class UserDashboardAPIView(APIView):
 
     def get(self, request):
         user = request.user
-        user_statistics = Prediction.objects.statistics().filter(user=user)
+        user_statistics = Prediction.objects.statistics(with_ranks=False)
 
         if user_statistics:
+            user_statistics = user_statistics.get(user=user)
             # Total predictions count
-            total_predictions = user_statistics[0]['total_predictions']
+            total_predictions = user_statistics['total_predictions']
 
             # Total points (sum of all points)
-            total_points = user_statistics[0]['total_points'] or 0
+            total_points = user_statistics['total_points'] or 0
 
             # Correct predictions (exact score predictions)
-            correct_predictions = user_statistics[0]['correct_predictions']
+            correct_predictions = user_statistics['correct_predictions']
 
             # Accuracy percentage
-            accuracy_percentage = user_statistics[0]['accuracy_percentage']
+            accuracy_percentage = user_statistics['accuracy_percentage']
 
-            user_rank = user_statistics[0]['rank']
+            rank = (
+                Prediction.objects.statistics()
+                .filter(total_points__gt=total_points)
+                .count() + 1
+            )
 
             return Response({
                 'total_points': total_points,
-                'user_rank': user_rank,
+                'user_rank': rank,
                 'total_predictions': total_predictions,
                 'correct_predictions': correct_predictions,
                 'accuracy_percentage': accuracy_percentage,
