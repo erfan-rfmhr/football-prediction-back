@@ -4,6 +4,8 @@ from apps.competitions.models import Match
 from rest_framework import viewsets
 from apps.competitions.api.serializers import MatchWithPredictionSerializer
 from rest_framework.filters import OrderingFilter
+from rest_framework.pagination import PageNumberPagination
+
 
 class MatchViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Match.objects.all()
