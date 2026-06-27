@@ -65,16 +65,16 @@ class ErrorResponseLoggingMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
-        if not settings.DEBUG:
-            if 400 <= response.status_code < 600:
-                logger.error(
-                    "%s %s -> %s | request body: %s | response body: %s",
-                    request.method,
-                    request.get_full_path(),
-                    response.status_code,
-                    request.body.decode("utf-8", errors="replace"),
-                    response.content.decode("utf-8", errors="replace"),
-                )
+        if 400 <= response.status_code < 600:
+            logger.error(
+                "%s %s -> %s | request body: %s | response body: %s",
+                request.method,
+                request.get_full_path(),
+                response.status_code,
+                request.body.decode("utf-8", errors="replace"),
+                response.content.decode("utf-8", errors="replace"),
+            )
+            if not settings.DEBUG:
                 try:
                     _send_telegram_message(_format_error_message(request, response))
                 except Exception as exc:

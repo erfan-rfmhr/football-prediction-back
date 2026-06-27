@@ -12,10 +12,10 @@ class UserDashboardAPIView(APIView):
 
     def get(self, request):
         user = request.user
-        user_statistics = Prediction.objects.statistics(with_ranks=False)
+        user_statistics = Prediction.objects.statistics(with_ranks=False).order_by('id')
+        user_statistics = user_statistics.filter(user=user).first()
 
         if user_statistics:
-            user_statistics = user_statistics.get(user=user)
             # Total predictions count
             total_predictions = user_statistics['total_predictions']
 

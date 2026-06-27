@@ -144,6 +144,7 @@ REST_FRAMEWORK = {
         "anon": "1000/min",
     },
     'PAGE_SIZE': 25,
+    'EXCEPTION_HANDLER': 'config.exception_handler.exception_handler',
 }
 
 # JWT Configuration
