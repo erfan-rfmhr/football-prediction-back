@@ -1,10 +1,8 @@
-from django.db.models import Count, Sum, Q, F, OuterRef, Subquery, Window
-from django.db.models.functions import RowNumber
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-from apps.competitions.models import Prediction, PointsChoices
+from apps.competitions.models import Prediction
 
 
 class UserDashboardAPIView(APIView):
@@ -12,8 +10,11 @@ class UserDashboardAPIView(APIView):
 
     def get(self, request):
         user = request.user
-        user_statistics = Prediction.objects.statistics(with_ranks=False).order_by('id')
-        user_statistics = user_statistics.filter(user=user).first()
+        user_statistics = Prediction.objects.statistics(with_ranks=False)
+        try:
+            user_statistics = user_statistics.get(user=user)
+        except Prediction.DoesNotExist:
+            user_statistics = None
 
         if user_statistics:
             # Total predictions count
