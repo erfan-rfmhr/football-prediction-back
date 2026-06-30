@@ -17,6 +17,7 @@ class UserDashboardAPIView(APIView):
         except Prediction.DoesNotExist:
             user_statistics = None
 
+        user_counts = User.objects.all().count()
         if user_statistics:
             # Total predictions count
             total_predictions = user_statistics['total_predictions']
@@ -42,13 +43,14 @@ class UserDashboardAPIView(APIView):
                 'total_predictions': total_predictions,
                 'correct_predictions': correct_predictions,
                 'accuracy_percentage': accuracy_percentage,
+                'total_users': user_counts,
             })
         else:
-            user_counts = User.objects.all().count()
             return Response({
                 'total_points': 0,
                 'user_rank': user_counts,
                 'total_predictions': 0,
                 'correct_predictions': 0,
                 'accuracy_percentage': 0,
+                'total_users': user_counts,
             })
