@@ -1,3 +1,4 @@
+from apps.accounts.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -43,9 +44,10 @@ class UserDashboardAPIView(APIView):
                 'accuracy_percentage': accuracy_percentage,
             })
         else:
+            user_counts = User.objects.all().count()
             return Response({
                 'total_points': 0,
-                'user_rank': -1,
+                'user_rank': user_counts,
                 'total_predictions': 0,
                 'correct_predictions': 0,
                 'accuracy_percentage': 0,
